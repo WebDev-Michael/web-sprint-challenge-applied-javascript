@@ -1,9 +1,5 @@
 import axios from "axios"; 
-import { topics } from "../mocks/data";
 
-for (let i = 0; i < topics.length; i ++){
-  Tabs(topics[i])
-}
 const Tabs = (topics) => {
   // TASK 3
   // ---------------------
@@ -19,15 +15,18 @@ const Tabs = (topics) => {
   //   <div class="tab">technology</div>
   // </div>
   //
+  
   const topic = document.createElement('div')
-  const tab = document.createElement('div')
-
   topic.classList.add('topics')
-  tab.classList.add('tab')
+  
+  topics.forEach(obj => {
+    const tab = document.createElement('div')
+    tab.classList.add('tab')
+    tab.textContent = obj
+    topic.appendChild(tab)
+  })
 
-  tab.textContent = topics
 
-  topic.appendChild(tab)
  
   return topic
 }
@@ -45,9 +44,9 @@ const tabsAppender = (selector) => {
   axios.get(URL)
   .then(res => {
     console.log(res.data)
-    res.data.topics.forEach(topic => {
-      document.querySelector(selector).appendChild(Tabs(topic))
-    })
+   
+      document.querySelector(selector).appendChild(Tabs(res.data.topics))
+   
   })
   .catch(err => {
     console.log(err)

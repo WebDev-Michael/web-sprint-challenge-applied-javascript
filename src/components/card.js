@@ -1,9 +1,5 @@
 import axios from "axios"; 
-import { articles } from '../mocks/data.js'; 
 
-for (let i = 0; i < articles.length; i ++){
-  cardAppender(articles[i]);
-}
 
 const Card = (article) => {
   // TASK 5
@@ -65,8 +61,11 @@ const cardAppender = (selector) => {
   axios.get(URL)
   .then(res => {
     console.log(res.data.articles)
-    res.data.articles.forEach(article => {
-      document.querySelector(selector).appendChild(Card(article))
+
+    Object.keys(res.data.articles).forEach(topic => {
+      res.data.articles[topic].forEach( article => {
+        document.querySelector(selector).appendChild(Card(article))
+      })
     })
   })
   .catch(err => {
